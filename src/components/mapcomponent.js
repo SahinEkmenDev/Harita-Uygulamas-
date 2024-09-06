@@ -28,6 +28,7 @@ import {
   SwapOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Menu } from "antd";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 
 const MySwal = withReactContent(Swal);
 
@@ -38,11 +39,24 @@ const MapComponent = () => {
   const [visible, setVisible] = useState(false);
   const [draw, setDraw] = useState(null);
   const [successId, setSuccessId] = useState(null);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   const mapElement = useRef();
   const mapRef = useRef(null);
   const vectorSourceRef = useRef(new VectorSource());
   const overlayRef = useRef();
+
+  const userInfo = localStorage.getItem("username");
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("username");
+    window.location.reload(); // Sayfayı yenileyerek logout işlemini tamamlıyoruz
+  };
+
+  const handleProfileClick = () => {
+    setProfileMenuOpen(!profileMenuOpen); // Profil menüsünü açıp kapatma
+  };
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -85,7 +99,13 @@ const MapComponent = () => {
 
   const fetchGeometriesFromDatabase = async () => {
     try {
-      const response = await fetch("https://localhost:7072/api/Point");
+      const token = localStorage.getItem("jwtToken"); // Token'ı localStorage'dan alıyoruz
+      const response = await fetch("https://localhost:7072/api/Point", {
+        headers: {
+          Authorization: "Bearer " + token, // Token'ı header'a ekliyoruz
+        },
+      });
+
       const result = await response.json();
 
       if (result.value.length === 0) {
@@ -111,18 +131,45 @@ const MapComponent = () => {
       message.error("Veritabanından veriler alınırken bir hata oluştu.");
     }
   };
-  const fetchData = async () => {
-    try {
-      console.log("fetchData çalışıyor..."); // Fonksiyonun çağrıldığını kontrol edin
-      const response = await fetch("https://localhost:7072/api/Point");
-      const result = await response.json();
 
-      console.log(result); // Gelen veriyi kontrol edin
-      setData(result.value); // Gelen veriyi state'e atıyoruz
-      setVisible(true); // Modal'ı açıyoruz
+  const fetchData = async () => {
+    const token = localStorage.getItem("jwtToken");
+
+    if (!token) {
+      console.error("JWT token bulunamadı, lütfen giriş yapın.");
+      return;
+    }
+
+    try {
+      const response = await fetch("https://localhost:7072/api/Point", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.error("Yetkilendirme hatası. Lütfen giriş yapın.");
+        } else {
+          console.error("Veri çekme hatası:", response.status);
+        }
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Veriler başarıyla alındı:", result);
+
+      // Gelen verilerin yapısını doğru şekilde kullanıyoruz
+      if (result && result.data) {
+        setData(result.data); // API'den gelen veriyi tabloya set ediyoruz
+        console.log("Tabloya aktarılacak veriler:", result.data);
+      } else {
+        console.error("Beklenen veri formatı alınamadı.");
+      }
     } catch (error) {
       console.error("Veri çekme hatası:", error);
-      message.error("Veri çekme sırasında bir hata oluştu.");
     }
   };
 
@@ -217,7 +264,7 @@ const MapComponent = () => {
           feature.set("name", name);
           console.log("Oluşturulan geometrinin ismi:", feature.get("name"));
 
-          saveGeometry({ name, wkt: wktFormat });
+          saveGeometry(wktFormat, name);
         }
       });
     });
@@ -226,26 +273,47 @@ const MapComponent = () => {
     setDraw(newDraw);
   };
 
-  const saveGeometry = async (geometry) => {
+  const saveGeometry = async (geometry, name) => {
+    const token = localStorage.getItem("jwtToken"); // Token'ı alıyoruz
+
+    if (!token) {
+      console.error("JWT token bulunamadı, lütfen giriş yapın.");
+      return;
+    }
+
+    const userId = "kullanıcıId'si"; // JWT token'dan UserId'yi alın (isteğe bağlı, backend buna ihtiyaç duyabilir)
+
+    const requestBody = {
+      WKT: geometry, // Geometri verisi
+      Name: name, // Geometri adı
+      UserId: userId, // Kullanıcı ID'si (eğer zorunluysa)
+    };
+
     try {
       const response = await fetch("https://localhost:7072/api/Point", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + token, // JWT token ekleniyor
         },
-        body: JSON.stringify({
-          name: geometry.name,
-          wkt: geometry.wkt,
-        }),
+        body: JSON.stringify(requestBody), // Gönderilen veri JSON formatında
       });
 
-      if (response.status === 201) {
-        console.log("Geometri başarıyla kaydedildi.");
+      if (!response.ok) {
+        if (response.status === 400) {
+          console.error(
+            "Sunucuya gönderilen istek hatalı. Lütfen gönderilen veriyi kontrol edin."
+          );
+        } else if (response.status === 401) {
+          console.error("Yetkilendirme hatası. Lütfen giriş yapın.");
+        } else {
+          console.error("Veri kaydedilirken bir hata oluştu.");
+        }
       } else {
-        console.error("Geometri kaydedilirken bir hata oluştu.");
+        console.log("Veri başarıyla kaydedildi.");
       }
     } catch (error) {
-      console.error("Bilinmeyen bir hata oluştu:", error.message);
+      console.error("Veri kaydedilirken bir hata oluştu.", error);
     }
   };
 
@@ -609,15 +677,15 @@ const MapComponent = () => {
   const columns = [
     {
       title: "Name",
-      dataIndex: "name",
+      dataIndex: "name", // Verilerdeki "name" alanı
       key: "name",
+      ellipsis: true, // Uzun metinler için taşma önleme
     },
     {
       title: "WKT",
-      dataIndex: "wkt",
+      dataIndex: "wkt", // Verilerdeki "wkt" alanı
       key: "wkt",
-      className: "wkt-container",
-      ellipsis: true,
+      ellipsis: true, // Uzun metinler için taşma önleme
     },
     {
       title: "Actions",
@@ -663,10 +731,21 @@ const MapComponent = () => {
           </button>
         </div>
 
-        <button className="menu-item">
+        <button className="menu-item" onClick={handleProfileClick}>
           <i className="fa fa-user-circle"></i>
           Profil
         </button>
+        {profileMenuOpen && (
+          <div className="profile-dropdown">
+            <p>
+              <strong>Kullanıcı:</strong> {userInfo}
+            </p>{" "}
+            {/* Kullanıcı bilgisi */}
+            <button onClick={handleLogout} className="logout-button">
+              <LogoutOutlined /> Çıkış Yap
+            </button>
+          </div>
+        )}
 
         {/* Geometry alt menüsü */}
         <button className="menu-item" onClick={handleGeometryClick}>
@@ -697,7 +776,13 @@ const MapComponent = () => {
           </div>
         )}
 
-        <button className="menu-item" onClick={fetchData}>
+        <button
+          className="menu-item"
+          onClick={() => {
+            fetchData();
+            setVisible(true);
+          }}
+        >
           <i className="fa fa-search"></i>
           Query
         </button>
@@ -710,25 +795,18 @@ const MapComponent = () => {
       <Modal
         title="Veriler"
         open={visible} // visible state'ine bağlı olarak modal açılıyor
-        onCancel={() => setVisible(false)} // Kapatma düğmesi
-        footer={null}
-        width="90%"
-        style={{ top: 20 }}
-        bodyStyle={{ height: "80vh", overflowY: "auto" }}
+        onCancel={() => setVisible(false)} // Modal kapatma işlemi
+        footer={null} // Modal altındaki default butonları kaldırıyoruz
+        width="90%" // Modal genişliği
+        style={{ top: 20 }} // Modal'ın üstten uzaklığı
+        bodyStyle={{ height: "80vh", overflowY: "auto" }} // Modal içeriğinin stili
       >
         <Table
-          dataSource={data}
-          columns={columns} // Tablonun kolonları
-          rowKey="id"
-          pagination={{ pageSize: 5 }} // Sayfalama
-          bordered
-          scroll={{ y: 380 }} // Yükseklik sabitleniyor
-          rowSelection={{
-            type: "checkbox",
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log("Seçilen Satırlar: ", selectedRows);
-            },
-          }}
+          dataSource={data} // Data state'inden gelen veriyi tabloya bağlama
+          columns={columns} // Kolonlar doğru ayarlanmış mı kontrol edin
+          rowKey="id" // Benzersiz bir rowKey tanımlandığından emin olun
+          pagination={{ pageSize: 5 }} // Sayfalama ayarını yapalım
+          bordered // Çerçeve görünümü ekler
         />
       </Modal>
 
