@@ -1,0 +1,446 @@
+.menu-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.menu-button {
+  background-color: white;
+  color: black;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.menu-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.search-box {
+  background-color: white;
+  border-radius: 50px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.search-box.open {
+  display: flex;
+  align-items: center;
+  width: 400px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.search-box input::placeholder {
+  color: #888;
+}
+
+.search-box .search-icon {
+  color: #888;
+  font-size: 20px;
+}
+
+.menu-items {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 300px;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1001; /* Menü düğmesinin üzerinde olacak şekilde z-index ayarlandı */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.menu-items.open {
+  transform: translateX(0);
+}
+
+.menu-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Ekranın en üstüne sabitler */
+  top: 0;
+  left: 0;
+  background-color: white; /* Arka plan rengini ekler */
+  z-index: 1002; /* Diğer içeriklerin üzerinde yer almasını sağlar */
+}
+
+.menu-header img {
+  max-height: 40px;
+  margin: 0 auto; /* Resmi ortalar */
+  position: absolute; /* Resmi mutlak konuma alır */
+  left: 50%; /* Sol taraftan %50 yer bırakır */
+  transform: translateX(-50%); /* Görüntüyü tam olarak ortalar */
+}
+
+.menu-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-item {
+  background-color: transparent;
+  color: black;
+  border: none;
+  padding: 15px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item i {
+  margin-right: 15px;
+}
+
+.menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.menu-profile {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-profile:hover {
+  background-color: #e8e8e8;
+}
+
+.profile-icon {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.menu-footer {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f8f8f8;
+}
+.menu-footer .menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.menu-footer .menu-item i {
+  margin-right: 10px;
+}
+
+.menu-footer .menu-item:hover {
+  background-color: #e8e8e8;
+}
+
+.ol-attribution {
+  display: none;
+}
+
+.button {
+  display: inline-block;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 0 5px; /* Butonların arasına boşluk ekliyoruz */
+}
+
+.show-button {
+  background-color: #007bff;
+}
+
+.show-button:hover {
+  background-color: #0056b3;
+}
+
+.update-button {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.update-button:hover {
+  background-color: #e0a800;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.button .icon {
+  margin-left: 10px;
+}
+
+.button.success .icon .fa-remove {
+  opacity: 0;
+}
+
+.button.success .icon .fa-check {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+}
+
+.popup-content p {
+  margin: 0;
+  padding: 2px 0;
+}
+
+.popup-buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.popup-button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.popup-button:hover {
+  background-color: #0056b3;
+}
+
+.popup-button:active {
+  background-color: #004085;
+}
+.sub-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px; /* Yeni butonları biraz içeri alır */
+}
+
+.sub-menu .menu-item {
+  padding: 10px 20px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: #f8f8f8;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+.sub-menu .menu-item:hover {
+  background-color: #e8e8e8;
+}
+.ant-table {
+  width: 100%;
+  height: 100%; /* Tabloyu tam genişliğe yayıyoruz */
+  margin: 10 auto; /* Ortalanmasını sağlıyoruz */
+}
+
+.ant-table td,
+.ant-table th {
+  text-align: center; /* Tablonun tüm hücrelerini ortalıyoruz */
+}
+
+.ant-table .ant-table-cell {
+  white-space: nowrap; /* Uzun metinlerin satır atlamasını engeller */
+}
+.wkt-container {
+  max-width: 300px; /* WKT sütununun maksimum genişliği */
+  word-break: break-word; /* Uzun metinlerin satır kaydırılması */
+  white-space: nowrap; /* Satır atlamasını engeller */
+}
+
+.ant-table .wkt-container {
+  max-width: 300px; /* WKT sütununun genişliğini sınırlıyoruz */
+  word-break: break-word; /* Uzun metinleri satır atlamadan kırmak için */
+}
+
+.ant-table-actions {
+  text-align: center;
+  min-width: 150px; /* Butonlar için minimum genişlik */
+}
+/* Tablo hücrelerinin sınırlarını belirginleştiriyoruz */
+.ant-table td,
+.ant-table th {
+  border: 1px solid #ddd; /* Daha belirgin bir gri çizgi */
+}
+
+/* Tablo genel çizgisi */
+.ant-table {
+  border: 2px solid #ccc; /* Tablo kenarlarına daha kalın bir çizgi ekliyoruz */
+  border-radius: 8px; /* Tablonun kenarlarını yuvarlıyoruz */
+}
+
+/* Tablo satırları arasında boşluk bırakmak için */
+.ant-table-tbody > tr > td {
+  border-bottom: 2px solid #eee; /* Satırlar arasına daha belirgin bir alt çizgi */
+}
+
+/* Tablo başlıklarını daha vurgulu yapmak için */
+.ant-table-thead > tr > th {
+  background-color: #f5f5f5; /* Başlık arka planını daha açık bir gri yapıyoruz */
+  font-weight: bold;
+  border-bottom: 2px solid #ccc; /* Başlık alt çizgisini kalınlaştırıyoruz */
+}
+/* Genel buton stilleri (Tüm butonlar için geçerli) */
+.glow-on-hover {
+  width: 75px; /* Boyutu küçülttük */
+  height: 42px; /* Yüksekliği küçülttük */
+  border: none;
+  outline: none;
+  color: #f7f7f7;
+  background: #6e6d6d;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  font-size: 14px; /* Daha küçük font */
+}
+
+/* Show butonu için */
+.glow-on-hover.show {
+  background-color: #007bff; /* Mavi renk */
+}
+
+/* Update butonu için */
+.glow-on-hover.update {
+  background-color: #ffc107; /* Sarı renk */
+  color: #333;
+}
+
+/* Remove butonu için */
+.glow-on-hover.remove {
+  background-color: #dc3545; /* Kırmızı renk */
+}
+
+/* Hover durumunda butonlarda parlak animasyon */
+.glow-on-hover:before {
+  content: "";
+  background: linear-gradient(45deg, #fefefe, #eee2fb);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+/* Aktif (tıklama) durumunda */
+.glow-on-hover:active {
+  color: #000;
+}
+
+.glow-on-hover:hover:before {
+  opacity: 1;
+}
+
+/* Parlak animasyon */
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+/* Üç nokta menüsü için stiller */
+.ellipsis-menu {
+  display: inline-block;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.ellipsis-menu .fa-ellipsis-h {
+  transform: rotate(90deg); /* Üç noktayı dikey yapmak için */
+}
+
+.ant-dropdown-menu-item {
+  padding: 10px 20px; /* Her satırın genişliğini artırıyoruz */
+  font-size: 14px; /* Yazı boyutunu biraz büyütüyoruz */
+  font-weight: 500; /* Yazıyı koyulaştırıyoruz */
+}
+
+.ant-dropdown-menu-item:hover {
+  background-color: #f0f0f0; /* Hover efekti ile arka planı gri yapıyoruz */
+}
+
+.ant-dropdown-menu-item i {
+  font-size: 16px; /* İkon boyutunu artırıyoruz */
+  color: #595959; /* İkonun rengini koyulaştırıyoruz */
+}
+
+.ant-dropdown-menu-item:hover i {
+  color: #000; /* Hover olayında ikon rengi daha da koyulaşıyor */
+}

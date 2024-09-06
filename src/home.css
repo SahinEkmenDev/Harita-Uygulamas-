@@ -1,0 +1,99 @@
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  font-size: 16px;
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+.toggle-text {
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: color 0.3s ease;
+  display: block; /* Tam genişlik için */
+  width: 100%;
+  text-align: center; /* Orta hizalama */
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+.toggle-text:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.login-form,
+.register-form {
+  width: 100%;
+  max-width: 300px; /* Form genişliği sabitleme */
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: white;
+  text-align: center; /* Orta hizalama */
+  width: 100%;
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("/src/assets/harita.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1s ease, visibility 1s ease;
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+.home-container.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 50px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+/* "Başla" Butonu Stilleri */
+.start-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 15px 0; /* Dikey padding, genişlik eşitleme */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box; /* Genişlik hesaplaması için */
+}
+
+.start-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 91, 187, 0.3);
+}
+
+.start-btn:active {
+  background-color: #00408a;
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 64, 138, 0.3);
+}
