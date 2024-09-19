@@ -1,70 +1,137 @@
-# Getting Started with Create React App
+# BasarsoftStaj-HaritaUygulamasi
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Harita Tabanlı Veri Yönetim Sistemi
 
-## Available Scripts
+Bu proje, kullanıcıların harita üzerinde çeşitli geometrik şekiller (nokta, çizgi, poligon) ekleyip bu verileri kolayca yönetebilecekleri bir sistemdir. Sistem, kullanıcı dostu bir arayüzle harita tabanlı veri yönetimini sağlar ve coğrafi bilgileri WKT (Well-Known Text) formatında saklar. Proje, özellikle kullanıcıların veritabanına veri kaydetmesi, güncellemesi ve silmesi işlemlerini basitleştirmeyi hedeflerken, admin kullanıcılar için tüm sistem verilerini yönetebilecekleri bir yetkilendirme mekanizması içerir.
 
-In the project directory, you can run:
+## Özellikler
 
-### `npm start`
+- **Harita Tabanlı Veri Yönetimi:** Kullanıcılar harita üzerinde noktalar, çizgiler ve poligonlar ekleyebilir, bu verileri yönetebilir.
+- **Kullanıcı Yetkilendirme ve Kimlik Doğrulama:** JWT (JSON Web Token) ile güvenli kimlik doğrulama ve yetkilendirme işlemleri yapılır. Admin kullanıcılar, diğer kullanıcıların verilerini yönetebilir.
+- **Veri Görselleştirme:** OpenLayers kütüphanesi ile harita üzerinde geometrik verilerin görselleştirilmesi.
+- **Veritabanı Yönetimi:** Veriler PostgreSQL'de WKT formatında saklanır. Veritabanı işlemleri için Entity Framework Core kullanılır.
+- **E-posta Bildirimleri:** Kullanıcıların şifre sıfırlama taleplerini karşılamak için e-posta bildirim sistemi entegre edilmiştir.
+- **Kullanıcı Dostu Arayüz:** React.js kullanılarak geliştirilmiş dinamik ve etkileşimli bir ön yüz.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Kullanılan Teknolojiler
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend:**
+  - React.js
+  - OpenLayers
+  - HTML, CSS, JavaScript
 
-### `npm test`
+- **Backend:**
+  - .NET Core
+  - Entity Framework Core
+  - PostgreSQL
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Kimlik Doğrulama ve Güvenlik:**
+  - JWT (JSON Web Token)
 
-### `npm run build`
+- **E-posta Bildirim Sistemi:**
+  - SMTP tabanlı e-posta gönderimi
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Gereksinimler
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Projenin çalışması için aşağıdaki bileşenlerin kurulu olması gerekmektedir:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Node.js:** v14.0 veya daha üstü
+- **.NET Core SDK**
+- **PostgreSQL**
+- **SMTP Sunucusu:** E-posta bildirimlerinin çalışabilmesi için SMTP ayarlarının yapılandırılması gerekmektedir.
 
-### `npm run eject`
+## Kurulum
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları takip edin:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. Depoyu Klonlayın
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+git clone [https://github.com/kullanici_adi/proje-adi.git](https://github.com/SahinEkmenDev/BasarsoftStaj-HaritaUygulamasi.git)
+cd harita-veri-yonetim-sistemi
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 2. Backend (API) Kurulumu
 
-## Learn More
+- .NET Core projesini açın ve gerekli bağımlılıkları yükleyin:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+cd backend
+dotnet restore
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- PostgreSQL veritabanınızı ayarlayın ve `appsettings.json` dosyasındaki bağlantı dizesini yapılandırın.
+- Veritabanını oluşturun ve migration'ları uygulayın:
 
-### Code Splitting
+```bash
+dotnet ef database update
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- API'yi başlatın:
 
-### Analyzing the Bundle Size
+```bash
+dotnet run
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 3. Frontend Kurulumu
 
-### Making a Progressive Web App
+- Proje dizininde frontend klasörüne geçin ve bağımlılıkları yükleyin:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+cd frontend
+npm install
+```
 
-### Advanced Configuration
+- React uygulamasını başlatın:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm start
+```
 
-### Deployment
+### 4. E-posta Servisi Kurulumu
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- SMTP ayarlarınızı `appsettings.json` dosyasına ekleyin:
 
-### `npm run build` fails to minify
+```json
+"EmailSettings": {
+  "SmtpServer": "smtp.mailprovider.com",
+  "SmtpPort": 587,
+  "SmtpUsername": "your-email@example.com",
+  "SmtpPassword": "your-email-password",
+  "FromEmail": "your-email@example.com"
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Bu ayarlar sayesinde şifre sıfırlama talepleri için kullanıcıların e-posta adreslerine bildirimler gönderilecektir.
+
+### 5. Uygulamayı Çalıştırma
+
+- Backend ve frontend'i başarıyla başlattıktan sonra, tarayıcınızda şu URL'yi ziyaret edebilirsiniz:
+
+```
+http://localhost:3000
+```
+
+## API Endpoints
+
+- **GET /api/point** - Tüm geometrik verileri getirir.
+- **POST /api/point** - Yeni bir geometrik veri ekler.
+- **PUT /api/point/{id}** - Belirli bir geometrik veriyi günceller.
+- **DELETE /api/point/{id}** - Belirli bir geometrik veriyi siler.
+
+## Testler
+
+Proje için çeşitli testler uygulanmıştır:
+- **Fonksiyonel Testler:** Veri ekleme, güncelleme ve silme işlemleri başarılı bir şekilde test edilmiştir.
+- **Kullanıcı Deneyimi Testleri:** Arayüzün kullanıcı dostu olup olmadığı ve kolay kullanım sağladığı doğrulanmıştır.
+- **Güvenlik Testleri:** JWT token bazlı kimlik doğrulama sistemi ile yetkisiz erişimler engellenmiş ve sistem güvenliği sağlanmıştır.
+- **E-posta Bildirim Testleri:** SMTP üzerinden şifre sıfırlama işlemleri ve e-posta bildirimleri başarılı bir şekilde test edilmiştir.
+
+## Katkıda Bulunanlar
+
+- **Şahin (kullanıcı adı)** - Geliştirme, proje yönetimi ve mimari tasarım
+- Yardım için iletişim: [sahinekmen160@gmail.com](mailto:sahinekmen160@gmail.com)
+
+## Lisans
+
+Bu proje MIT lisansı ile lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına göz atabilirsiniz.
