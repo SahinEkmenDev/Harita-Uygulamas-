@@ -1,6 +1,7 @@
 # BasarsoftStaj-HaritaUygulamasi
 
 # Harita Tabanlı Veri Yönetim Sistemi
+#https://www.youtube.com/watch?v=9ah441JisoA
 
 Bu proje, kullanıcıların harita üzerinde çeşitli geometrik şekiller (nokta, çizgi, poligon) ekleyip bu verileri kolayca yönetebilecekleri bir sistemdir. Sistem, kullanıcı dostu bir arayüzle harita tabanlı veri yönetimini sağlar ve coğrafi bilgileri WKT (Well-Known Text) formatında saklar. Proje, özellikle kullanıcıların veritabanına veri kaydetmesi, güncellemesi ve silmesi işlemlerini basitleştirmeyi hedeflerken, admin kullanıcılar için tüm sistem verilerini yönetebilecekleri bir yetkilendirme mekanizması içerir.
 
