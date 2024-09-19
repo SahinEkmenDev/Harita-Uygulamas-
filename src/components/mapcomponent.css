@@ -152,12 +152,38 @@
   margin-right: 10px;
   color: #007bff;
 }
+.profile-dropdown {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
 .menu-footer {
   margin-top: auto;
   padding-top: 10px;
   border-top: 1px solid #ddd;
   background-color: #f8f8f8;
+}
+.sub-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Butonlar arası boşluk */
+  margin-top: 10px; /* Alt menünün yukarıdan boşluğu */
+}
+
+.logout-button {
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.logout-button:hover {
+  background-color: #ff1744;
 }
 .menu-footer .menu-item {
   display: flex;
@@ -232,15 +258,12 @@
 }
 
 .ol-popup {
-  position: absolute;
   background-color: white;
+  border: 1px solid #ccc;
   padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  font-size: 12px;
-  color: #333;
-  white-space: nowrap;
-  transform: translate(-50%, -100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
 }
 
 .popup-content p {
@@ -249,27 +272,81 @@
 }
 
 .popup-buttons {
-  margin-top: 10px;
   display: flex;
   justify-content: space-around;
+  margin-top: 10px;
 }
 
 .popup-button {
-  padding: 5px 10px;
-  border-radius: 4px;
+  background-color: #f5f5f5;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 12px;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
+  font-size: 1.2em;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.popup-button:hover {
-  background-color: #0056b3;
+.popup-button i {
+  color: #333;
+}
+.popup-button i.fa-pencil:hover {
+  color: #4caf50; /* Yeşil - Güncelle */
+}
+
+.popup-button i.fa-trash:hover {
+  color: #f44336; /* Kırmızı - Sil */
+}
+
+.popup-button i.fa-times:hover {
+  color: #9e9e9e; /* Gri - Kapat */
+}
+
+/* Güncelleme butonu */
+.update-button {
+  border-color: #007bff;
+}
+
+.update-button i {
+  color: #007bff;
+}
+
+.update-button:hover i {
+  color: #0056b3;
+}
+
+/* Silme butonu */
+.delete-button {
+  border-color: #dc3545;
+}
+
+.delete-button i {
+  color: #dc3545;
+}
+
+.delete-button:hover i {
+  color: #a71d2a;
+}
+
+/* Kapatma butonu */
+.close-button {
+  border-color: #28a745;
+}
+
+.close-button i {
+  color: #28a745;
+}
+
+.close-button:hover i {
+  color: #196f3d;
 }
 
 .popup-button:active {
   background-color: #004085;
+}
+.popup-button:hover {
+  background-color: #eee;
+  transform: scale(1.1);
 }
 .sub-menu {
   display: flex;
@@ -420,10 +497,19 @@
   display: inline-block;
   font-size: 24px;
   cursor: pointer;
+  color: #6c757d; /* Hafif gri renk */
+}
+.ellipsis-menu i {
+  color: #888; /* Açık gri */
+  font-size: 1.5em; /* Boyutu biraz artır */
+  transition: color 0.3s ease;
 }
 
 .ellipsis-menu .fa-ellipsis-h {
   transform: rotate(90deg); /* Üç noktayı dikey yapmak için */
+}
+.ellipsis-menu:hover i {
+  color: #333; /* Koyu gri hover */
 }
 
 .ant-dropdown-menu-item {
@@ -443,4 +529,23 @@
 
 .ant-dropdown-menu-item:hover i {
   color: #000; /* Hover olayında ikon rengi daha da koyulaşıyor */
+}
+/* Görüntüle (EyeOutlined) ikonu için */
+.ellipsis-menu .fa-eye {
+  color: #007bff; /* Mavi renk */
+}
+
+/* Düzenle (EditOutlined) ikonu için */
+.ellipsis-menu .fa-pencil {
+  color: #28a745; /* Yeşil renk */
+}
+
+/* Sil (DeleteOutlined) ikonu için */
+.ellipsis-menu .fa-trash {
+  color: #dc3545; /* Kırmızı renk */
+}
+
+/* Kapat (CloseOutlined) ikonu için */
+.ellipsis-menu .fa-times {
+  color: #ffc107; /* Sarı renk */
 }
